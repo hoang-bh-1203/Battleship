@@ -24,7 +24,7 @@ public class ExplosionAnimation {
     private int currentIndex;
 
     public ExplosionAnimation(SquareView cell, BoardView board) {
-        File[] icons = new File("resources/animation").listFiles();
+        File[] icons = new File("assets/animation").listFiles();
         for (File file : icons) {
             try {
                 String filename = file.getName();

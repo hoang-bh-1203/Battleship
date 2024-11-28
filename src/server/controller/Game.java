@@ -75,7 +75,7 @@ public class Game {
         getOpponent(turn).writeNotification(OPPONENTS_TURN);
     }
 
-    //neu 2 player co borad hợp lệ thì start game
+    //neu 2 player co board hợp lệ thì start game
     public void checkBoards() {
         if (player1.getBoard() != null && player2.getBoard() != null) {
             placementTimer.cancel();
@@ -127,6 +127,8 @@ public class Game {
             opponent.writeObject(response);
 
             if (opponent.getBoard().gameOver()) {
+                player.increaseNumberOfGame();
+                opponent.increaseNumberOfGame();
             	player.addWinGame(); // update điểm
                 turn.writeNotification(GAME_WIN);
                 opponent.writeNotification(GAME_LOSE);

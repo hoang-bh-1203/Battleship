@@ -96,7 +96,7 @@ public class GameHandler implements Runnable{
                     view.addChatMessage("Game not found.");
                     break;
                 case Constants.NotificationCode.PLACE_SHIPS:
-                    //view.addChatMessage("Can place ships now.");
+                    view.addChatMessage("Can place ships now.");
                     ownBoard.setBoatPositionLocked(false);
                     break;
                 case Constants.NotificationCode.YOUR_TURN:

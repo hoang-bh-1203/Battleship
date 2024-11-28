@@ -11,6 +11,7 @@ import javax.swing.table.DefaultTableModel;
 import client.model.User;
 
 public class RankFrm extends javax.swing.JFrame {
+
     private final DefaultTableModel tableModel;
     private List<User> listUserStatics;
     private final List<String> rankSrc;
@@ -34,6 +35,14 @@ public class RankFrm extends javax.swing.JFrame {
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(rootPane, ex.getMessage());
         }
+        // Lấy mô hình cột của bảng
+        javax.swing.table.TableColumnModel columnModel = rankTextArea.getColumnModel();
+
+        // Điều chỉnh độ rộng cho từng cột
+        columnModel.getColumn(0).setPreferredWidth(50);  // Cột "STT"
+        columnModel.getColumn(1).setPreferredWidth(150); // Cột "Nickname"
+        columnModel.getColumn(2).setPreferredWidth(100); // Cột "Rank"
+        columnModel.getColumn(3).setPreferredWidth(80);  // Cột "Điểm số"
     }
 
     @SuppressWarnings("unchecked")
@@ -45,7 +54,7 @@ public class RankFrm extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         Object[][] rows = {
         };
-        String[] columns = {"STT","Nickname","Rank"};
+        String[] columns = {"STT","Nickname","Rank","Điểm số"};
         DefaultTableModel model = new DefaultTableModel(rows, columns){
             @Override
             public Class<?> getColumnClass(int column){
@@ -53,6 +62,7 @@ public class RankFrm extends javax.swing.JFrame {
                     case 0: return String.class;
                     case 1: return String.class;
                     case 2: return ImageIcon.class;
+                    case 3: return Integer.class;
                     default: return Object.class;
                 }
             }
@@ -114,7 +124,9 @@ public class RankFrm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void rankTextAreaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rankTextAreaMouseClicked
-        if (rankTextArea.getSelectedRow() == -1) return;
+        if (rankTextArea.getSelectedRow() == -1) {
+            return;
+        }
         if (listUserStatics.get(rankTextArea.getSelectedRow()).getID() == Client.user.getID()) {
             JOptionPane.showMessageDialog(rootPane, "Thứ hạng của bạn là " + (rankTextArea.getSelectedRow() + 1));
             return;
@@ -128,9 +140,10 @@ public class RankFrm extends javax.swing.JFrame {
         int i = 0;
         for (User user : listUserStatics) {
             tableModel.addRow(new Object[]{
-                    i + 1,
-                    user.getNickname(),
-                    new ImageIcon("assets/icon/" + rankSrc.get(i) + ".png")
+                i + 1,
+                user.getNickname(),
+                new ImageIcon("assets/icon/" + rankSrc.get(i) + ".png"),
+                user.getNumberOfGame() * 3
             });
             i++;
         }

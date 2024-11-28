@@ -10,10 +10,8 @@ import java.util.Vector;
 import javax.swing.JOptionPane;
 import client.model.User;
 import client.util.Constants;
-import static client.util.Constants.NotificationCode.GAME_TOKEN;
-import static client.util.Constants.NotificationCode.OPPONENTS_NAME;
+import static client.util.Constants.NotificationCode.*;
 import client.views.GameView;
-import java.awt.EventQueue;
 
 public class SocketHandle implements Runnable {
 
@@ -161,10 +159,14 @@ public class SocketHandle implements Runnable {
                     //Xử lý khi nhận được yêu cầu thách đấu
                     if (messageSplit[0].equals("duel-notice")) {
                         int res = JOptionPane.showConfirmDialog(Client.getVisibleJFrame(), "Bạn nhận được lời thách đấu của " + messageSplit[2] + " (ID=" + messageSplit[1] + ")", "Xác nhận thách đấu", JOptionPane.YES_NO_OPTION);
-                        if (res == JOptionPane.YES_OPTION) {
-                            Client.socketHandle.write("agree-duel," + messageSplit[1]);
-                        } else {
-                            Client.socketHandle.write("disagree-duel," + messageSplit[1]);
+                        try {
+                            if (res == JOptionPane.YES_OPTION) {
+                                Client.socketHandle.write("agree-duel," + messageSplit[1]);
+                            } else {
+                                Client.socketHandle.write("disagree-duel," + messageSplit[1]);
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
                     }
                     //Xử lý không đồng ý thách đấu
@@ -199,7 +201,7 @@ public class SocketHandle implements Runnable {
                         Client.closeAllViews();
                         System.out.println("Đã vào phòng: " + roomID);
                         //Xử lý vào phòng
-                        Client.socketHandle.startGame(OPPONENTS_NAME);
+//                        Client.socketHandle.startGame(new NotificationMessage(PLACE_SHIPS));
                     }
                     //Xử lý khi thoát phòng chơi
                     if (messageSplit[0].equals("left-room")) {
@@ -238,28 +240,38 @@ public class SocketHandle implements Runnable {
                         }
                         Client.roomListFrm.updateRoomList(rooms, passwords);
                     }
-                } else if (receivedMsg instanceof NotificationMessage) {
-                    NotificationMessage n = (NotificationMessage) receivedMsg;
-
-                    if (n.getCode() != Constants.NotificationCode.OPPONENTS_NAME) {
-                        System.out.print("<< " + n.getCode());
-                    }
-
-                    switch (n.getCode()) {
-                        case GAME_TOKEN:
-                            if (n.getText().length == 1) {
-                                key = n.getText()[0];
-                                System.out.println(" " + key);
-                            }
-                            break;
-                        case OPPONENTS_NAME:
-                            startGame(receivedMsg);
-                            break;
+                } else {
+                    if (gameHandlerModel != null) {
+                        gameHandlerModel.parseInput(receivedMsg);
+                    } else if (receivedMsg instanceof NotificationMessage) {
+                        parserInput(receivedMsg);
                     }
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public void parserInput(Object receivedMsg) throws InterruptedException {
+        if (receivedMsg instanceof NotificationMessage) {
+            NotificationMessage n = (NotificationMessage) receivedMsg;
+
+            if (n.getCode() != Constants.NotificationCode.OPPONENTS_NAME) {
+                System.out.print("<< " + n.getCode());
+            }
+
+            switch (n.getCode()) {
+                case GAME_TOKEN:
+                    if (n.getText().length == 1) {
+                        key = n.getText()[0];
+                        System.out.println(" " + key);
+                    }
+                    break;
+                case OPPONENTS_NAME:
+                    startGame(receivedMsg);
+                    break;
+            }
         }
     }
 
@@ -281,6 +293,15 @@ public class SocketHandle implements Runnable {
         GameView gameView = new GameView(this.out, this.in, this);
         gameHandlerModel = gameView.getModel();
         gameHandlerModel.parseInput(firstInput);
+    }
+
+    public void sendStringArray(String[] array) {
+        try {
+            out.writeObject(array);
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void reopen() {

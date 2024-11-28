@@ -3,21 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/bhhoa/OneDrive/Documents/NetBeansProjects/Battleship_Final/src/client/views/GameNoticeFrm.java</file>
-            <file>file:/C:/Users/bhhoa/OneDrive/Documents/NetBeansProjects/Battleship_Final/src/client/views/ShipView.java</file>
-            <file>file:/C:/Users/bhhoa/OneDrive/Documents/NetBeansProjects/Battleship_Final/src/client/views/FriendRequestFrm.java</file>
-            <file>file:/C:/Users/bhhoa/OneDrive/Documents/NetBeansProjects/Battleship_Final/src/client/views/LabeledBoardView.java</file>
-            <file>file:/C:/Users/bhhoa/OneDrive/Documents/NetBeansProjects/Battleship_Final/src/client/model/Ship.java</file>
-            <file>file:/C:/Users/bhhoa/OneDrive/Documents/NetBeansProjects/Battleship_Final/src/client/views/ExplosionAnimation.java</file>
-            <file>file:/C:/Users/bhhoa/OneDrive/Documents/NetBeansProjects/Battleship_Final/src/client/views/SquareView.java</file>
-            <file>file:/C:/Users/bhhoa/OneDrive/Documents/NetBeansProjects/Battleship_Final/src/client/model/Square.java</file>
-            <file>file:/C:/Users/bhhoa/OneDrive/Documents/NetBeansProjects/Battleship_Final/src/client/views/GamePlayFrm.java</file>
-            <file>file:/C:/Users/bhhoa/OneDrive/Documents/NetBeansProjects/Battleship_Final/src/client/views/FriendListFrm.java</file>
-            <file>file:/C:/Users/bhhoa/OneDrive/Documents/NetBeansProjects/Battleship_Final/src/client/views/FindRoomFrm.java</file>
-            <file>file:/C:/Users/bhhoa/OneDrive/Documents/NetBeansProjects/Battleship_Final/src/client/views/JoinRoomPasswordFrm.java</file>
-            <file>file:/C:/Users/bhhoa/OneDrive/Documents/NetBeansProjects/Battleship_Final/src/client/views/HomePageFrm.java</file>
-            <file>file:/C:/Users/bhhoa/OneDrive/Documents/NetBeansProjects/Battleship_Final/src/client/model/User.java</file>
-            <file>file:/C:/Users/bhhoa/OneDrive/Documents/NetBeansProjects/Battleship_Final/src/client/views/GameView.java</file>
+            <file>file:/C:/Users/bhhoa/OneDrive/Documents/NetBeansProjects/Battleship_Final/src/server/controller/ServerThread.java</file>
         </group>
     </open-files>
 </project-private>

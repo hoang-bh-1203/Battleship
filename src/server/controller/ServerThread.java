@@ -323,15 +323,6 @@ public class ServerThread implements Runnable {
                     if (messageSplit[0].equals("disagree-duel")) {
                         Server.serverThreadBus.sendMessageToUserID(Integer.parseInt(messageSplit[1]), message);
                     }
-                    // Xử lý khi người chơi tấn công
-                    if (messageSplit[0].equals("acctack-performed")) {
-
-                        room.getCompetitor(clientNumber).write(message);
-                    }
-                    //Xử lý khi người chơi đánh 1 nước
-                    if (messageSplit[0].equals("caro")) {
-                        room.getCompetitor(clientNumber).write(message);
-                    }
                     if (messageSplit[0].equals("chat")) {
                         room.getCompetitor(clientNumber).write(message);
                     }
@@ -357,9 +348,6 @@ public class ServerThread implements Runnable {
                     }
                     if (messageSplit[0].equals("draw-refuse")) {
                         room.getCompetitor(clientNumber).write("draw-refuse,");
-                    }
-                    if (messageSplit[0].equals("voice-message")) {
-                        room.getCompetitor(clientNumber).write(message);
                     }
                     // Xử lí left room
                     if (messageSplit[0].equals("left-room")) {
@@ -490,5 +478,9 @@ public class ServerThread implements Runnable {
     
     public void addWinGame() {
         userDAO.addWinGame(this.user.getID());
+    }
+    
+    public void increaseNumberOfGame() {
+        this.user.setNumberOfGame(this.user.getNumberOfGame() + 1);
     }
 }

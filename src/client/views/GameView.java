@@ -33,6 +33,7 @@ import javax.swing.border.EmptyBorder;
 import client.controller.Client;
 import client.controller.GameHandler;
 import static client.util.Constants.Configs.PLACEMENT_TIMEOUT;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -41,7 +42,7 @@ import static client.util.Constants.Configs.PLACEMENT_TIMEOUT;
 public class GameView extends JFrame {
 
     private JTextField inputField = new JTextField();
-    private JButton rotateButton = new JButton("Xoay");
+    private JButton rotateButton = new JButton("Xoay tàu");
     private JButton saveShipState = new JButton("Sẵn sàng");
     private JScrollPane chatScrollPane;
     private JList<String> chat = new JList<>();
@@ -54,6 +55,7 @@ public class GameView extends JFrame {
     public GameView(ObjectOutputStream out, final ObjectInputStream in, final SocketHandle socketHandle) {
         chat.setModel(chatModel);
 
+        this.setIconImage(new ImageIcon("assets/images/SpaceShip.png").getImage());
         JPanel rootPanel = new JPanel(new BorderLayout(5, 5));
         rootPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -135,12 +137,26 @@ public class GameView extends JFrame {
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
-                Client.openView(Client.View.HOMEPAGE);
+                exitGame();
             }
         });
+        
         setTimer(PLACEMENT_TIMEOUT / 1000);
     }
-
+    
+    public void exitGame() {
+        try {
+            stopTimer();
+            Client.socketHandle.write("left-room,");
+            Client.closeAllViews();
+            Client.socketHandle.reopen();
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+        }
+        Client.closeAllViews();
+        Client.openView(Client.View.HOMEPAGE);
+    }
+    
     public void stopTimer() {
         if (timer != null) {
             timer.stop();
@@ -200,14 +216,14 @@ public class GameView extends JFrame {
     }
 
     public void gameOverAction(String result) {
-        Object[] options = {"Quay về sảnh", "Thoát"};
+        Object[] options = {"Quay về trang Home", "Thoát"};
         int n = JOptionPane.showOptionDialog(this,
-                result + " Bạn muốn làm gì bây giờ?", "Game Over ",
+                result + " Bạn muốn làm gì?", "Trận đấu đã kết thúc ",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                 options, options[0]);
         switch(n) {
             case 0:
-                Client.openView(Client.View.HOMEPAGE);
+                exitGame();
                 break;
             case 1:
                 System.exit(0);

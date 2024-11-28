@@ -334,7 +334,7 @@ public class UserDAO extends DAO{
         try {
             PreparedStatement preparedStatement = con.prepareStatement("UPDATE users\n"
                     + "SET users.numberOfWin = ?\n"
-                    + "WHERE user.ID = ?");
+                    + "WHERE users.ID = ?");
             preparedStatement.setInt(1, new UserDAO().getNumberOfWin(ID) + 1);
             preparedStatement.setInt(2, ID);
             System.out.println(preparedStatement);

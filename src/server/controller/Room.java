@@ -4,19 +4,9 @@
  */
 package server.controller;
 
-import client.controller.MoveMessage;
-import client.controller.MoveResponseMessage;
-import client.controller.NotificationMessage;
-import client.model.Ship;
-import client.model.Square;
-import client.util.Constants;
-import static client.util.Constants.Configs.*;
-import static client.util.Constants.NotificationCode.*;
 import server.dao.UserDAO;
 import java.io.IOException;
-import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.HashMap;
 
 /**
  *
@@ -27,9 +17,11 @@ public class Room {
     private final int id;
     private final ServerThread user1;
     private ServerThread user2;
+    private Game game;
     private String password;
     private final UserDAO userDAO;
-
+    private HashMap<String, ServerThread> requestList;
+    private String requestedGameKey;
 
     public Room(ServerThread user1) {
         System.out.println("Tạo phòng thành công, ID là: " + Server.ROOM_ID);
@@ -38,8 +30,9 @@ public class Room {
         userDAO = new UserDAO();
         this.user1 = user1;
         this.user2 = null;
+        this.game = null;
     }
-    
+
     public int getId() {
         return id;
     }
@@ -50,8 +43,9 @@ public class Room {
 
     public void setUser2(ServerThread user2) {
         this.user2 = user2;
+        this.game = new Game(this.user1, user2);
     }
-
+    
     public ServerThread getUser1() {
         return user1;
     }

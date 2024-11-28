@@ -199,6 +199,9 @@ public class Client {
                 case JOIN_ROOM_PASSWORD:
                     joinRoomPasswordFrm.dispose();
                     break;
+                case GAME_VIEW:
+                    gameView.dispose();
+                    break;
             }
         }
     }
@@ -248,6 +251,9 @@ public class Client {
         if (joinRoomPasswordFrm != null) {
             joinRoomPasswordFrm.dispose();
         }
+        if (gameView != null) {
+            gameView.dispose();
+        }
     }
 
     public static void main(String[] args) {
@@ -276,6 +282,6 @@ public class Client {
         FIND_ROOM,
         ROOM_LIST,
         JOIN_ROOM_PASSWORD,
-        GAME_PLAY
+        GAME_VIEW
     }
 }

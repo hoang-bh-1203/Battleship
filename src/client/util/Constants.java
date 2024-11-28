@@ -13,14 +13,14 @@ public class Constants {
     public static final String ALPHABET = "abcdefghijklmnopqrstuvwxyz";
 
     public static class Configs {
-        public static final int PORT_NUMBER = 5000;
+        public static final int PORT_NUMBER = 7777;
         // public static final String HOST_NAME = "26.64.248.188";
 //        public static final String HOST_NAME = "26.36.9.179";
         public static final String HOST_NAME = "localhost";
         public static final int BOARD_DIMENSION = 10;
 
-        public final static int TURN_TIMEOUT = 60000;
-        public final static int PLACEMENT_TIMEOUT = 120000;
+        public final static int TURN_TIMEOUT = 30000;
+        public final static int PLACEMENT_TIMEOUT = 60000;
     }
 
     public static class NotificationCode {
